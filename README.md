@@ -4,6 +4,10 @@ A polished, animated full-width dropdown for Flutter with nested submenus,
 smart overlay positioning, rich leading widgets, hover feedback, and a
 thread-style connector for child actions.
 
+## Screenshot
+
+![Full width dropdown button demo](screenshots/screenshot.gif)
+
 ## Features
 
 - Full-width overlay menu with configurable trigger width/height

@@ -316,16 +316,24 @@ class _FullWidthDropdownButtonState extends State<FullWidthDropdownButton>
                           color: _withAlpha(Colors.black, 0.05),
                           borderRadius: BorderRadius.circular(100),
                         ),
-                child: widget.child ??
-                    SvgPicture.asset(
-                      widget.iconAsset!,
-                      colorFilter: ColorFilter.mode(
-                        _isOpen
-                            ? widget.openIconColor ?? Colors.white
-                            : widget.iconColor ?? Colors.grey,
-                        BlendMode.srcIn,
+                child: widget.child != null
+                    ? IconTheme(
+                        data: IconThemeData(
+                          color: _isOpen
+                              ? widget.openIconColor ?? Colors.white
+                              : widget.iconColor ?? Colors.grey,
+                        ),
+                        child: widget.child!,
+                      )
+                    : SvgPicture.asset(
+                        widget.iconAsset!,
+                        colorFilter: ColorFilter.mode(
+                          _isOpen
+                              ? widget.openIconColor ?? Colors.white
+                              : widget.iconColor ?? Colors.grey,
+                          BlendMode.srcIn,
+                        ),
                       ),
-                    ),
               ),
             );
           },

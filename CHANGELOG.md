@@ -1,3 +1,7 @@
+## 0.2.0
+
+- Added screenshot documentation for the dropdown demo.
+
 ## 0.1.1
 
 - Fixed widget tests hanging because of an unused repeating animation.

@@ -5,7 +5,7 @@
   "packages": [
     {
       "name": "full_width_dropdown_button",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "dependencies": [
         "flutter",
         "flutter_svg"
