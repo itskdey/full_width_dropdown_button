@@ -6,7 +6,7 @@ thread-style connector for child actions.
 
 ## Screenshot
 
-![Full width dropdown button demo](screenshots/screenshot.gif)
+<img src="https://raw.githubusercontent.com/itskdey/full_width_dropdown_button/main/screenshots/screenshot.png" alt="Full width dropdown button demo" width="320">
 
 ## Features
 

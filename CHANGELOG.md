@@ -1,3 +1,12 @@
+## 0.2.2
+
+- Replaced the large animated screenshot with a smaller static PNG for pub.dev.
+
+## 0.2.1
+
+- Added pub.dev screenshot metadata.
+- Switched the README screenshot to a raw GitHub URL for reliable rendering.
+
 ## 0.2.0
 
 - Added screenshot documentation for the dropdown demo.
