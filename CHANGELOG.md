@@ -1,3 +1,7 @@
+## 0.2.3
+
+- Replaced the static screenshot with a compact animated WebP preview.
+
 ## 0.2.2
 
 - Replaced the large animated screenshot with a smaller static PNG for pub.dev.

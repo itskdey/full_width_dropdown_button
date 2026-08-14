@@ -1,6 +1,6 @@
 name: full_width_dropdown_button
 description: A polished full-width Flutter dropdown with nested submenus, smart up/down overlay positioning, scroll following, hover states, and smooth animations.
-version: 0.2.2
+version: 0.2.3
 homepage: https://pub.dev/packages/full_width_dropdown_button
 
 environment:
@@ -26,4 +26,4 @@ topics:
 
 screenshots:
   - description: Full width dropdown button demo.
-    path: screenshots/screenshot.png
+    path: screenshots/screenshot-preview.webp
