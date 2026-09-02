@@ -1,3 +1,10 @@
+## 0.2.4
+
+- Added comprehensive API documentation for the public package surface.
+- Replaced deprecated submenu transition usage with a compatibility-safe animation.
+- Restored strict static analysis in CI.
+- Refreshed release metadata for pub.dev scoring.
+
 ## 0.2.3
 
 - Replaced the static screenshot with a compact animated WebP preview.
