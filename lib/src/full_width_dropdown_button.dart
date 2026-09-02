@@ -16,8 +16,12 @@ Color _withAlpha(Color color, double opacity) {
 // Data model
 // ---------------------------------------------------------------------------
 
-/// Describes a top-level dropdown item.
+/// Describes a top-level item displayed by [FullWidthDropdownButton.rich].
+///
+/// Items can contain custom leading widgets, nested [subItems], and an optional
+/// destructive visual treatment.
 class DropdownItem {
+  /// Creates a rich dropdown item.
   const DropdownItem({
     required this.label,
     this.leading,
@@ -25,27 +29,46 @@ class DropdownItem {
     this.isDestructible = false,
   });
 
+  /// Creates a dropdown item that only displays [label].
   factory DropdownItem.simple(String label) {
     return DropdownItem(label: label);
   }
 
+  /// Text displayed for this item.
   final String label;
+
+  /// Optional widget displayed before [label].
+  ///
+  /// This can be an [Icon], avatar, SVG widget, or any other compact widget.
   final Widget? leading;
+
+  /// Nested actions displayed when this item is expanded.
+  ///
+  /// Entries can be strings or [DropdownSubItem] instances. Strings are
+  /// converted to simple [DropdownSubItem] objects internally.
   final List<dynamic> subItems;
+
+  /// Whether this item should use the destructive-action visual treatment.
   final bool isDestructible;
 
+  /// Whether this item contains one or more nested actions.
   bool get hasSubItems => subItems.isNotEmpty;
 }
 
-/// Describes a nested dropdown item.
+/// Describes a nested action inside a [DropdownItem].
 class DropdownSubItem {
+  /// Creates a nested dropdown action.
   const DropdownSubItem({required this.label, this.isDestructible = false});
 
+  /// Creates a nested action that only displays [label].
   factory DropdownSubItem.simple(String label) {
     return DropdownSubItem(label: label);
   }
 
+  /// Text displayed for this nested action.
   final String label;
+
+  /// Whether this nested action should use the destructive visual treatment.
   final bool isDestructible;
 }
 
@@ -55,9 +78,15 @@ class DropdownSubItem {
 
 /// An animated dropdown trigger that opens a full-width overlay menu.
 ///
-/// Use the default constructor for a flat list of strings, or [FullWidthDropdownButton.rich]
-/// for leading widgets, nested sub-items, and destructive actions.
+/// Use the default constructor for a flat list of strings, or
+/// [FullWidthDropdownButton.rich] for leading widgets, nested sub-items, and
+/// destructive actions. The overlay tracks the trigger while scrolling and
+/// opens below it first, flipping above only when space is limited.
 class FullWidthDropdownButton extends StatefulWidget {
+  /// Creates a dropdown backed by a flat list of string [items].
+  ///
+  /// [onSelected] is called with the selected string. Either [child] or
+  /// [iconAsset] must be provided as the trigger content.
   FullWidthDropdownButton({
     super.key,
     this.iconAsset,
@@ -82,6 +111,10 @@ class FullWidthDropdownButton extends StatefulWidget {
           onSelected(sub ?? parent);
         });
 
+  /// Creates a dropdown using rich [dropdownItems].
+  ///
+  /// Use this constructor for leading widgets, nested actions, or destructive
+  /// menu items. Either [child] or [iconAsset] must be provided.
   const FullWidthDropdownButton.rich({
     super.key,
     this.iconAsset,
@@ -102,22 +135,51 @@ class FullWidthDropdownButton extends StatefulWidget {
           'Provide either child or iconAsset.',
         );
 
+  /// Optional SVG asset path used as the trigger when [child] is not provided.
   final String? iconAsset;
+
+  /// Items displayed in the overlay menu.
   final List<DropdownItem> dropdownItems;
+
+  /// Called when a parent item or nested action is selected.
+  ///
+  /// The second argument is `null` for a parent item and contains the nested
+  /// label when a sub-item is selected.
   final void Function(String parent, String? sub) onItemSelected;
 
+  /// Optional label for the currently selected item.
+  ///
+  /// This value is exposed for consumers that want to keep selection state
+  /// alongside the dropdown.
   final String? selectedItem;
+
+  /// Called after an open dropdown is closed.
   final VoidCallback? onClose;
 
+  /// Custom trigger widget.
+  ///
+  /// When omitted, [iconAsset] must be provided.
   final Widget? child;
+
+  /// Padding applied around the trigger content.
   final EdgeInsetsGeometry padding;
+
+  /// Optional trigger width.
   final double? width;
+
+  /// Optional trigger height.
   final double? height;
 
+  /// Decoration used while the dropdown is closed.
   final BoxDecoration? decoration;
+
+  /// Decoration used while the dropdown is open.
   final BoxDecoration? openDecoration;
 
+  /// Icon color used while the dropdown is closed.
   final Color? iconColor;
+
+  /// Icon color used while the dropdown is open.
   final Color? openIconColor;
 
   @override
@@ -706,13 +768,13 @@ class _AnimatedDropdownPanelState extends State<_AnimatedDropdownPanel>
     }
 
     final totalCount = item.subItems.length;
+    final sizeFactor = CurvedAnimation(
+      parent: _subControllers[parentIndex],
+      curve: Curves.easeInOutCubic,
+    );
 
-    return SizeTransition(
-      sizeFactor: CurvedAnimation(
-        parent: _subControllers[parentIndex],
-        curve: Curves.easeInOutCubic,
-      ),
-      axisAlignment: -1.0,
+    return AnimatedBuilder(
+      animation: sizeFactor,
       child: FadeTransition(
         opacity: CurvedAnimation(
           parent: _subControllers[parentIndex],
@@ -739,6 +801,15 @@ class _AnimatedDropdownPanelState extends State<_AnimatedDropdownPanel>
           ),
         ),
       ),
+      builder: (context, child) {
+        return ClipRect(
+          child: Align(
+            alignment: Alignment.topCenter,
+            heightFactor: sizeFactor.value,
+            child: child,
+          ),
+        );
+      },
     );
   }
 
