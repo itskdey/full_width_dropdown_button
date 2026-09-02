@@ -28,7 +28,7 @@ A polished, animated full-width dropdown for Flutter with nested submenus, smart
 
 ```yaml
 dependencies:
-  full_width_dropdown_button: ^0.2.3
+  full_width_dropdown_button: ^0.2.4
 ```
 
 Then import the package:
